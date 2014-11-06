@@ -1,0 +1,54 @@
+@import normalize
+@import compass/css3/border-radius
+@import compass/css3/box-sizing
+@import compass/css3/transition
+
+$c-size: 100px
+$m: 4
+$n: 4
+$border-radius: 4px
+
+=absolute-center
+	position: absolute
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
+	margin: auto
+
+*
+	+box-sizing(border-box)
+
+body
+	background-color: #222
+	color: #888
+	font-family: Lora, Georgia, serif
+
+.board
+	+absolute-center
+	height: ($c-size+2*$border-radius)*$m
+	width:  ($c-size+2*$border-radius)*$n
+	display: none
+
+.c
+	float: left
+	height: $c-size
+	width:  $c-size
+	margin: $border-radius
+	background-color: #333
+	border: 1px solid #111
+	+border-radius($border-radius)
+	+transition(all .2s)
+
+.on
+	background-color: #bbb
+	border: 1px solid #444
+
+.message
+	+absolute-center
+	height: ($c-size+2*$border-radius)*$m
+	width:  ($c-size+2*$border-radius)*$n
+	text-align: center
+	font-size: 40px
+	// letter-spacing: 2px
+
