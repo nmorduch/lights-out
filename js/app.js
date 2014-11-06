@@ -20,7 +20,7 @@ $(function() {
 			$this = $(this);
 			r2 = $this.data('r');
 			c2 = $this.data('c');
-			if (r2-r<2 && r-r2<2 && c2-c<2 && c-c2<2){
+			if ((r2-r<2 && r-r2<2 && c2===c)||(c2-c<2 && c-c2<2 && r2===r)){
 				$this.toggleClass('on');
 			}
 		});
