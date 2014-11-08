@@ -3,8 +3,8 @@ $(function() {
 	$board = $('.board');
 	$message = $('.message');
 	$message.delay(600).fadeOut(300);
-	for (i=0;i<4;i++) {
-		for (j=0;j<4;j++) {
+	for (i=0;i<5;i++) {
+		for (j=0;j<5;j++) {
 			on = Math.random() < 0.5 ? " on" : "";
 		 	$board.append('<div class="c'+on+'" data-r='+i+' data-c='+j+'></div>');
 		}
