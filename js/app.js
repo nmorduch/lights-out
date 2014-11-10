@@ -1,21 +1,27 @@
 $(function() {
-	var on, $board, $message;
+	var $win, $message, $board, $row, on;
+	$win = $(window);
 	$board = $('.board');
 	$message = $('.message');
-	$message.delay(600).fadeOut(300);
 	for (i=0;i<5;i++) {
+	 	$board.append('<div class="row">');
+	 	$row = $board.children().last();
 		for (j=0;j<5;j++) {
 			on = Math.random() < 0.5 ? " on" : "";
-		 	$board.append('<div class="c'+on+'" data-r='+i+' data-c='+j+'></div>');
+		 	$row.append('<div class="cell'+on+'" data-r="'+i+'" data-c="'+j+'"></div>');
 		}
 	}
-	$board.delay(1200).fadeIn(500);
-	$('.c').click(function() {
+	$message.delay(600).fadeOut(300,function() {
+		setTimeout(function() {
+			$board.addClass('flex').fadeTo(400,1);
+		}, 600);
+	});
+	$('.cell').click(function() {
 		var $this, r, c, check;
 		$this = $(this);
 		r = $this.data('r');
 		c = $this.data('c');
-		$('.c').each(function() {
+		$('.cell').each(function() {
 			var $this, r2, c2;
 			$this = $(this);
 			r2 = $this.data('r');
@@ -26,7 +32,7 @@ $(function() {
 		});
 		if (!$this.hasClass('on')) {
 			check = false;
-			$('.c').each(function() {
+			$('.cell').each(function() {
 				if ($(this).hasClass('on')) {
 					check = true;
 				}
@@ -37,4 +43,14 @@ $(function() {
 			}
 		}
 	});
+	var boardSize = function(){
+		if ($win.height()>$win.width()) {
+			$board.height($board.width());
+		} else {
+			$board.height('90%');
+			$board.width($board.height());
+		}
+	};
+	$win.resize(boardSize);
+	boardSize();
 });
