@@ -13,7 +13,20 @@ $(function() {
 		}
 	}
 
-	// Turn on some lights
+	// Size the board
+	var boardSize = function(){
+		if ($win.height()>$win.width()) {
+			$board.width('90%');
+			$board.height($board.width());
+		} else {
+			$board.height('90%');
+			$board.width($board.height());
+		}
+	};
+	$win.resize(boardSize);
+	boardSize();
+
+	// Toggle a + of lights
 	var lightToggle = function($cell){
 		var r, c;
 		r = $cell.data('r');
@@ -28,31 +41,22 @@ $(function() {
 			}
 		});
 	};
-	$('.cell').each(function() {
-		if (Math.random() < 0.5) {
-			lightToggle($(this));
-		}
-	});
 
-	// Size the board
-	var boardSize = function(){
-		if ($win.height()>$win.width()) {
-			$board.width('90%');
-			$board.height($board.width());
-		} else {
-			$board.height('90%');
-			$board.width($board.height());
-		}
+	// Set a game, remove message, fade in the board
+	var gameSet = function() {
+		$('.cell').each(function() {
+			if (Math.random() < 0.5) {
+				lightToggle($(this));
+			}
+		});
+		$message.delay(500).fadeOut(300,function() {
+			setTimeout(function() {
+				$board.addClass('flex').fadeTo(400,1);
+				$message.empty();
+			}, 600);
+		});
 	};
-	$win.resize(boardSize);
-	boardSize();
-
-	// Fade out message, fade in board
-	$message.delay(600).fadeOut(300,function() {
-		setTimeout(function() {
-			$board.addClass('flex').fadeTo(400,1);
-		}, 600);
-	});
+	gameSet();
 
 	// Allow game play
 	$('.cell').click(function() {
@@ -66,10 +70,21 @@ $(function() {
 					check = true;
 				}
 			});
+			// Fade out board
 			if (check === false) {
-				$board.delay(100).fadeOut(500);
-				$message.text('Lights Out.').delay(800).fadeIn(800);
+				$board.delay(100).fadeOut(500, function() {
+					$message.append('<h2>Lights Out.</h2>')
+						.delay(300).fadeIn(800, function() {
+						$board.removeClass('flex').css('opacity','0');
+						// Allow restart
+						setTimeout(function() {
+							$message.append('<a href="#" id="restart">again</a>');
+							$('#restart').click(gameSet);
+						}, 400);
+					});
+				});
 			}
 		}
 	});
+
 });

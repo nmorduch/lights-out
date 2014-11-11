@@ -1,14 +1,13 @@
-$board-size: 500px
-$m: 5
-$n: 5
-$border-radius: 4px
-$border-radius-xs: 2px
-
 $blue-dark: #2C4158
 $blue-light: #4F6D8C
 $gray-brown: #8C8E7D
 $white: #F0F2F1
 $brown: #402C24
+
+$border-radius: 4px
+$border-radius-xs: 2px
+
+$font-family: Lora, Georgia, serif
 
 *
 	box-sizing: border-box
@@ -19,9 +18,22 @@ html, body
 
 body
 	display: flex
+	flex-direction: column
 	background-color: $blue-dark
 	color: $white
-	font-family: Lora, Georgia, serif
+	font-family: $font-family
+	font-style: italic
+
+h2
+	font-size: 40px
+
+a
+	color: $gray-brown
+	text-decoration: none
+	&:hover
+		color: $blue-light
+		cursor: pointer
+
 
 .board
 	display: none
@@ -50,8 +62,13 @@ body
 	max-width: 500px
 	margin: auto
 	padding: 20px
-	font-size: 40px
 	text-align: center
+	position: relative
+	a
+		position: absolute
+		bottom: 0
+		left: 0
+		right: 0
 
 .flex
 	display: flex
