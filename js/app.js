@@ -1,5 +1,5 @@
 $(function() {
-	var $win, $message, $board, $row, on;
+	var $win, $message, $board, $row, check;
 	$win = $(window);
 	$board = $('.board');
 	$message = $('.message');
@@ -9,15 +9,13 @@ $(function() {
 	 	$board.append('<div class="row">');
 	 	$row = $board.children().last();
 		for (j=0;j<5;j++) {
-			on = Math.random() < 0.5 ? "" : "";
-			// on = Math.random() < 0.5 ? " on" : "";
-		 	$row.append('<div class="cell'+on+'" data-r="'+i+'" data-c="'+j+'"></div>');
+		 	$row.append('<div class="cell" data-r="'+i+'" data-c="'+j+'"></div>');
 		}
 	}
 
 	// Turn on some lights
 	var lightToggle = function($cell){
-		var r, c, check;
+		var r, c;
 		r = $cell.data('r');
 		c = $cell.data('c');
 		$('.cell').each(function() {
@@ -35,7 +33,6 @@ $(function() {
 			lightToggle($(this));
 		}
 	});
-
 
 	// Size the board
 	var boardSize = function(){
