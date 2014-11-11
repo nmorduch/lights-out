@@ -4,19 +4,20 @@
 
 /* line 16, ../sass/screen.sass */
 html, body {
-  height: 100%; }
+  height: 100%;
+  margin: 0; }
 
-/* line 19, ../sass/screen.sass */
+/* line 20, ../sass/screen.sass */
 body {
-  background-color: #2C4158;
-  color: #F0F2F1;
-  font-family: Lora, Georgia, serif;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  background-color: #2C4158;
+  color: #F0F2F1;
+  font-family: Lora, Georgia, serif; }
 
-/* line 25, ../sass/screen.sass */
+/* line 26, ../sass/screen.sass */
 .board {
   display: none;
   -webkit-box-orient: vertical;
@@ -25,22 +26,20 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
   margin: auto;
-  height: 500px;
-  width: 500px;
   opacity: 0; }
 
-/* line 33, ../sass/screen.sass */
+/* line 32, ../sass/screen.sass */
 .row {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
-          flex-grow: 1; }
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
 
-/* line 37, ../sass/screen.sass */
+/* line 36, ../sass/screen.sass */
 .cell {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -52,19 +51,20 @@ body {
           transition: all 200ms;
   background-color: #4F6D8C; }
   @media (max-width: 300px) {
-    /* line 37, ../sass/screen.sass */
+    /* line 36, ../sass/screen.sass */
     .cell {
       margin: 2px;
       border-radius: 2px; } }
 
-/* line 47, ../sass/screen.sass */
+/* line 46, ../sass/screen.sass */
 .on {
   background-color: #F0F2F1; }
 
-/* line 50, ../sass/screen.sass */
+/* line 49, ../sass/screen.sass */
 .message {
   max-width: 500px;
   margin: auto;
+  padding: 20px;
   font-size: 40px;
   text-align: center; }
 

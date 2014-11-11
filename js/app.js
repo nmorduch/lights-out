@@ -3,6 +3,8 @@ $(function() {
 	$win = $(window);
 	$board = $('.board');
 	$message = $('.message');
+
+	// Build the board
 	for (i=0;i<5;i++) {
 	 	$board.append('<div class="row">');
 	 	$row = $board.children().last();
@@ -11,11 +13,28 @@ $(function() {
 		 	$row.append('<div class="cell'+on+'" data-r="'+i+'" data-c="'+j+'"></div>');
 		}
 	}
+
+	// Size the board
+	var boardSize = function(){
+		if ($win.height()>$win.width()) {
+			$board.width('90%');
+			$board.height($board.width());
+		} else {
+			$board.height('90%');
+			$board.width($board.height());
+		}
+	};
+	$win.resize(boardSize);
+	boardSize();
+
+	// Fade out message, fade in board
 	$message.delay(600).fadeOut(300,function() {
 		setTimeout(function() {
 			$board.addClass('flex').fadeTo(400,1);
 		}, 600);
 	});
+
+	// Allow game play
 	$('.cell').click(function() {
 		var $this, r, c, check;
 		$this = $(this);
@@ -30,6 +49,7 @@ $(function() {
 				$this.toggleClass('on');
 			}
 		});
+		// Check if game over
 		if (!$this.hasClass('on')) {
 			check = false;
 			$('.cell').each(function() {
@@ -43,14 +63,4 @@ $(function() {
 			}
 		}
 	});
-	var boardSize = function(){
-		if ($win.height()>$win.width()) {
-			$board.height($board.width());
-		} else {
-			$board.height('90%');
-			$board.width($board.height());
-		}
-	};
-	$win.resize(boardSize);
-	boardSize();
 });

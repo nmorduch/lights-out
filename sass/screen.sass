@@ -15,24 +15,23 @@ $brown: #402C24
 
 html, body
 	height: 100%
+	margin: 0
 
 body
+	display: flex
 	background-color: $blue-dark
 	color: $white
 	font-family: Lora, Georgia, serif
-	display: flex
 
 .board
 	display: none
 	flex-direction: column
 	margin: auto
-	height: $board-size
-	width:  $board-size
 	opacity: 0
 
 .row
-	display: flex
 	flex-grow: 1
+	display: flex
 
 .cell
 	flex-grow: 1
@@ -50,6 +49,7 @@ body
 .message
 	max-width: 500px
 	margin: auto
+	padding: 20px
 	font-size: 40px
 	text-align: center
 
