@@ -1,20 +1,24 @@
 $(function() {
-	var $win, $message, $board, $row, check;
+	var $win, type, $message, $board, boardSize, $row, check;
 	$win = $(window);
 	$board = $('.board');
 	$message = $('.message');
+	boardSize = 5;
+	if ($('body').hasClass('torus')) {
+		type = 'torus';
+	}
 
 	// Build the board
-	for (i=0;i<5;i++) {
+	for (i=0;i<boardSize;i++) {
 	 	$board.append('<div class="row">');
 	 	$row = $board.children().last();
-		for (j=0;j<5;j++) {
+		for (j=0;j<boardSize;j++) {
 		 	$row.append('<div class="cell" data-r="'+i+'" data-c="'+j+'"></div>');
 		}
 	}
 
 	// Size the board
-	var boardSize = function(){
+	var boardSizer = function(){
 		if ($win.height()>$win.width()) {
 			$board.width('90%');
 			$board.height($board.width());
@@ -23,8 +27,8 @@ $(function() {
 			$board.width($board.height());
 		}
 	};
-	$win.resize(boardSize);
-	boardSize();
+	$win.resize(boardSizer);
+	boardSizer();
 
 	// Toggle a + of lights
 	var lightToggle = function($cell){
@@ -36,8 +40,16 @@ $(function() {
 			$this = $(this);
 			r2 = $this.data('r');
 			c2 = $this.data('c');
-			if ((r2-r<2 && r-r2<2 && c2===c)||(c2-c<2 && c-c2<2 && r2===r)){
-				$this.toggleClass('on');
+			if (type == 'torus') {
+				if ((c2===c && (Math.abs(r2-r)<2||(Math.abs(r2-r)+1)%boardSize<1))
+				  ||(r2===r && (Math.abs(c2-c)<2||(Math.abs(c2-c)+1)%boardSize<1))) {
+					$this.toggleClass('on');
+				}				
+			} else {
+				if ((Math.abs(r2-r)<2 && c2===c)
+				  ||(Math.abs(c2-c)<2 && r2===r)) {
+					$this.toggleClass('on');
+				}
 			}
 		});
 	};

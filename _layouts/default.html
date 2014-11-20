@@ -7,12 +7,15 @@
 	<meta name="og:description" content="A small version of the Lights Out game.">
 	<meta name="og:image" content="http://nmorduch.me/lights-out/og.png">
 	<title>Lights Out</title>
-	<link rel="stylesheet" type="text/css" href="css/screen.css">
+	<link rel="stylesheet" type="text/css" href="{{ site.baseurl }}css/screen.css">
 	<link href='http://fonts.googleapis.com/css?family=Lora:400italic,700italic' rel='stylesheet' type='text/css'>
 </head>
-<body>
-	{{ content }}
-	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
+<body class="{{ page.body_class }}">
+	<div class="message">
+		<h2>Turn out the lights.</h2>
+	</div>
+	<div class="board"></div>
+	<script type="text/javascript" src="{{ site.baseurl }}js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="{{ site.baseurl }}js/app.js"></script>
 </body>
 </html>
