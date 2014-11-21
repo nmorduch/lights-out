@@ -104,34 +104,46 @@ $(function() {
 		}
 	});
 
+	// Clear the board
+	var boardClear = function() {
+		$('.cell').each(function() {
+			$(this).removeClass('on');
+		});
+	};
+
 	// Change type
 	var toPlane = function() {
 		$body.removeClass('torus');
 		$navTorus.removeClass('active');
 		$navPlane.addClass('active');
 		type = 'plane';
+		boardClear();
+		gameSet();
 	};
 	var toTorus = function() {
 		$body.addClass('torus');
 		$navPlane.removeClass('active');
 		$navTorus.addClass('active');
 		type = 'torus';
+		boardClear();
+		gameSet();
 	};
-	$navPlane.children('a').click(function(e){
+	$navPlane.children('a').click(function(e) {
 		e.preventDefault();
 		toPlane();
-		history.pushState(null, null, '{{ site.baseurl }}');
-		window.addEventListener("popstate", function(e) {
-			toTorus();
-		});
+		history.pushState(null, null, '{{ site.baseurl }}/');
 	});
-	$navTorus.children('a').click(function(e){
+	$navTorus.children('a').click(function(e) {
 		e.preventDefault();
 		toTorus();
 		history.pushState(null, null, '{{ site.baseurl }}/torus');
-		window.addEventListener("popstate", function(e) {
+	});
+	window.addEventListener("popstate", function() {
+		if (type == 'torus') {
 			toPlane();
-		});
+		} else {
+			toTorus();
+		}
 	});
 
 });
