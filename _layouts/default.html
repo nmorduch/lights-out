@@ -14,8 +14,8 @@
 <body class="{{ page.body_class }}">
 	<nav>
 		<ul class="ul-unstyled">
-			<li{% if page.title == "Plane" %} class="active"{% endif %}><a href="{{ site.baseurl }}"><i class="fa fa-fw fa-plane"></i></a></li>
-			<li{% if page.title == "Torus" %} class="active"{% endif %}><a href="{{ site.baseurl }}/torus"><i class="fa fa-fw fa-circle-o"></i></a></li>
+			<li id="navPlane"{% if page.title == "Plane" %} class="active"{% endif %}><a href="{{ site.baseurl }}"><i class="fa fa-fw fa-plane"></i></a></li>
+			<li id="navTorus"{% if page.title == "Torus" %} class="active"{% endif %}><a href="{{ site.baseurl }}/torus"><i class="fa fa-fw fa-circle-o"></i></a></li>
 		</ul>
 	</nav>
 	<div class="message">

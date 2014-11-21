@@ -1,12 +1,17 @@
+---
+---
 $(function() {
-	var $win, type, $message, $board, boardSize, $row, check;
+	var $win, $body, $message, $board, boardSize, type, $navPlane, $navTorus, $row, check;
 	$win = $(window);
+	$body = $('body')
 	$board = $('.board');
 	$message = $('.message');
 	boardSize = 5;
-	if ($('body').hasClass('torus')) {
+	if ($body.hasClass('torus')) {
 		type = 'torus';
 	}
+	$navPlane = $('#navPlane');
+	$navTorus = $('#navTorus');
 
 	// Build the board
 	for (i=0;i<boardSize;i++) {
@@ -97,6 +102,36 @@ $(function() {
 				});
 			}
 		}
+	});
+
+	// Change type
+	var toPlane = function() {
+		$body.removeClass('torus');
+		$navTorus.removeClass('active');
+		$navPlane.addClass('active');
+		type = 'plane';
+	};
+	var toTorus = function() {
+		$body.addClass('torus');
+		$navPlane.removeClass('active');
+		$navTorus.addClass('active');
+		type = 'torus';
+	};
+	$navPlane.children('a').click(function(e){
+		e.preventDefault();
+		toPlane();
+		history.pushState(null, null, '{{ site.baseurl }}');
+		window.addEventListener("popstate", function(e) {
+			toTorus();
+		});
+	});
+	$navTorus.children('a').click(function(e){
+		e.preventDefault();
+		toTorus();
+		history.pushState(null, null, '{{ site.baseurl }}/torus');
+		window.addEventListener("popstate", function(e) {
+			toPlane();
+		});
 	});
 
 });
