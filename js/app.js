@@ -1,22 +1,21 @@
 ---
 ---
 $(function() {
-	var $win, $body, $message, $board, rows, type, $navPlane, $navTorus, $row, check, pathSplit;
-	$win = $(window);
-	$body = $('body')
-	$board = $('.board');
-	$message = $('.message');
-	rows = 5;
-	if ($body.hasClass('torus')) {
-		type = 'torus';
-	} else {
-		type = 'plane';
-	}
-	$navPlane = $('#navPlane');
-	$navTorus = $('#navTorus');
+	var check,
+		pathSplit,
 
-	// Build the board
+		$win = $(window)
+		$body = $('body')
+		$message = $('.message')
+		$board = $('.board')
+		$sizeInput = $('#sizeInput')
+		rows = $sizeInput.val()
+		$navPlane = $('#navPlane')
+		$navTorus = $('#navTorus')
+		type = $body.hasClass('torus') ? 'torus' : 'plane';
+		
 	var boardBuilder = function(buildRows){
+		// Build the board
 		for (i=0;i<buildRows;i++) {
 		 	$board.append('<div class="row">');
 		 	$row = $board.children().last();
@@ -24,6 +23,34 @@ $(function() {
 			 	$row.append('<div class="cell" data-r="'+i+'" data-c="'+j+'"></div>');
 			}
 		}
+		// Allow game play
+		$('.cell').click(function() {
+			var $this = $(this);
+			lightToggle($this);
+			// Check if game over
+			if (!$this.hasClass('on')) {
+				check = false;
+				$('.cell').each(function() {
+					if ($(this).hasClass('on')) {
+						check = true;
+					}
+				});
+				// Fade out board
+				if (check === false) {
+					$board.delay(100).fadeOut(500, function() {
+						$message.append('<h2>Lights Out.</h2>')
+							.delay(300).fadeIn(800, function() {
+							$board.removeClass('flex').css('opacity','0');
+							// Allow restart
+							setTimeout(function() {
+								$message.append('<a href="javascript:void(0)" id="restart">again</a>');
+								$('#restart').click(gameSet);
+							}, 400);
+						});
+					});
+				}
+			}
+		});
 	}
 	boardBuilder(rows);
 
@@ -65,7 +92,7 @@ $(function() {
 	};
 
 	// Set a game, remove message, fade in the board
-	var gameSet = function() {
+	var gameSet = function(boardInSpeed,timeout) {
 		$('.cell').each(function() {
 			if (Math.random() < 0.5) {
 				lightToggle($(this));
@@ -73,41 +100,13 @@ $(function() {
 		});
 		$message.delay(500).fadeOut(300,function() {
 			setTimeout(function() {
-				$board.addClass('flex').fadeTo(400,1);
+				$board.addClass('flex').fadeTo(boardInSpeed,1);
 				$message.empty();
-			}, 600);
+			}, timeout);
 		});
 	};
-	gameSet();
+	gameSet(400,600);
 
-	// Allow game play
-	$('.cell').click(function() {
-		var $this = $(this);
-		lightToggle($this);
-		// Check if game over
-		if (!$this.hasClass('on')) {
-			check = false;
-			$('.cell').each(function() {
-				if ($(this).hasClass('on')) {
-					check = true;
-				}
-			});
-			// Fade out board
-			if (check === false) {
-				$board.delay(100).fadeOut(500, function() {
-					$message.append('<h2>Lights Out.</h2>')
-						.delay(300).fadeIn(800, function() {
-						$board.removeClass('flex').css('opacity','0');
-						// Allow restart
-						setTimeout(function() {
-							$message.append('<a href="javascript:void(0)" id="restart">again</a>');
-							$('#restart').click(gameSet);
-						}, 400);
-					});
-				});
-			}
-		}
-	});
 
 	// Clear the board
 	var boardClear = function() {
@@ -115,6 +114,14 @@ $(function() {
 			$(this).removeClass('on');
 		});
 	};
+
+	// Change size
+	$sizeInput.change(function(){
+		rows = $sizeInput.val();
+		$board.hide().empty();
+		boardBuilder(rows);
+		gameSet(0,0);
+	});
 
 	// Change type
 	var toPlane = function() {

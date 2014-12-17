@@ -41,14 +41,28 @@ nav
 	right: 10px
 	a
 		@extend a
-	.active > a
-		color: $white
+	li
+		opacity: 0.5
+	.active
+		opacity: 0.8
+		> a
+			color: $white
+	&:hover li
+		opacity: 1
 
 .ul-unstyled
 	margin: 0
 	padding: 0
 	> li
 		list-style-type: none
+
+.ul-right > li
+	float: left
+
+#sizeInput
+	position: relative
+	top: -2px
+	margin-left: 4px
 
 .board
 	display: none
