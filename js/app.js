@@ -97,7 +97,7 @@ $(function() {
 						$board.removeClass('flex').css('opacity','0');
 						// Allow restart
 						setTimeout(function() {
-							$message.append('<a href="#" id="restart">again</a>');
+							$message.append('<a href="javascript:void(0)" id="restart">again</a>');
 							$('#restart').click(gameSet);
 						}, 400);
 					});
