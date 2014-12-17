@@ -1,7 +1,7 @@
 ---
 ---
 $(function() {
-	var $win, $body, $message, $board, boardSize, type, $navPlane, $navTorus, $row, check;
+	var $win, $body, $message, $board, boardSize, type, $navPlane, $navTorus, $row, check, pathSplit;
 	$win = $(window);
 	$body = $('body')
 	$board = $('.board');
@@ -9,6 +9,8 @@ $(function() {
 	boardSize = 5;
 	if ($body.hasClass('torus')) {
 		type = 'torus';
+	} else {
+		type = 'plane';
 	}
 	$navPlane = $('#navPlane');
 	$navTorus = $('#navTorus');
@@ -129,20 +131,22 @@ $(function() {
 		gameSet();
 	};
 	$navPlane.children('a').click(function(e) {
+		history.pushState(null, null, '{{ site.baseurl }}/');
 		e.preventDefault();
 		toPlane();
-		history.pushState(null, null, '{{ site.baseurl }}/');
 	});
 	$navTorus.children('a').click(function(e) {
+		history.pushState(null, null, '{{ site.baseurl }}/torus/');
 		e.preventDefault();
 		toTorus();
-		history.pushState(null, null, '{{ site.baseurl }}/torus');
 	});
 	window.addEventListener("popstate", function() {
-		if (type == 'torus') {
-			toPlane();
-		} else {
+		pathSplit = location.pathname.split("/");
+		pathSplit.pop();
+		if (pathSplit.pop() == 'torus') {
 			toTorus();
+		} else {
+			toPlane();
 		}
 	});
 
